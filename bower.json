@@ -1,0 +1,27 @@
+{
+  "name": "mim-video-playlist",
+  "version": "0.0.1",
+  "homepage": "https://github.com/maciek3t/mim-video-playlist",
+  "authors": [
+    "maciek3t@op.pl"
+  ],
+  "description": "ko video playlist",
+  "moduleType": [
+    "amd",
+    "globals"
+  ],
+  "keywords": [
+    "video",
+    "playlist",
+    "knockoutjs",
+    "component"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
