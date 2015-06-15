@@ -1,54 +1,52 @@
 
-<link href="../../bower_modules/datatables/media/css/jquery.dataTables.css" rel="stylesheet" />
-<div class="row">
-    <div class="_col-md-8"></div>
-    <div class="_col-md-4">
- 
-        <table class="mim-playlist-outer" id="mim-playlist-container">
-            <thead>
-                <tr>
-                    <th>video</th>
-                    <th>list</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <!-- ko if : isVideoVisible() -->
-                        <div class="_embed-responsive _embed-responsive-16by9">                            
-                                <video  data-bind="attr:{src: fileName}" 
-                                    id="video-content" width="640" height="360"
-                                   controls="controls" preload="auto"></video>
+    <div class="row">
+            <table class="mim-playlist-outer" id="mim-playlist-container">
+                <thead style="visibility:hidden">
+                    <tr>
+                        <th>video</th>
+                        <th>s</th>
+                        <th>list</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
+                            <!-- ko if : isVideoVisible() -->
+                            <div class="embed-responsive embed-responsive-16by9">
+                                <video data-bind="attr:{'src': fileName, 'poster': posterFileName, afterRender: playerAssign()}"
+                                       id="videoContent" width="640" height="360"
+                                        type="video/mp4"
+                                       controls="controls" preload="auto">
+                                </video>
                             </div>
-                        <!-- /ko -->
-                        <img src="videos/sampleVideo.jpg" alt="Video" class="img-responsive" style="width: 100%" data-bind="visible: !isVideoVisible(), click: posterClick" />
-</td>
-                    <td>
-                        <table class="mim-playlist-innner" id="mim-playlist">
-                            <thead>
-                                <tr>
-
-                                    <th>title</th>
-                                </tr>
-                            </thead>
-                            <tbody data-bind="foreach: list">
-                                <tr>
-                                    <td>
-                                        <div class="media">
-                                            <div class="media-left">
-                                                <img class="media-object" data-bind="attr:{src: poster}" width="128" height="72" />
+                            <!-- /ko -->
+                            <!--<img src="videos/Video_Etap_1_1.jpg" alt="Video" class="img-responsive" width="640" height="360" data-bind="visible: !isVideoVisible(), click: posterClick" />-->
+                        </td>
+                        <td style="width: 2px;"></td>
+                        <td>
+                            <table class="mim-playlist-innner" id="mim-playlist-innner">
+                                <thead style="visibility:hidden">
+                                    <tr style="visibility:hidden; display:none">
+                                        <th>title</th>
+                                    </tr>
+                                </thead>
+                                <tbody data-bind="foreach: list">
+                                    <tr data-bind="click: $parent.playlistClick">
+                                        <td>
+                                            <div class="media">
+                                                <div class="media-left">
+                                                    <img class="media-object" data-bind="attr:{src: poster}" width="128" height="72" />
+                                                </div>
+                                                <div class="media-body" style="width: 100%">
+                                                    <span data-bind="text: title"></span>
+                                                </div>
                                             </div>
-                                            <div class="media-body">
-                                                <span data-bind="text: title"></span>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
     </div>
-</div>

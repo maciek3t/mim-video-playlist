@@ -1,24 +1,46 @@
-define(['knockout', 'text!./mim-video-playlist.html', 'datatables'], function (ko, templateMarkup) {
+define(['knockout', 'css!mediaelement-css',  'css!dataTables-bootstrap-css', 'text!./mim-video-playlist.html', 'datatables', 'knockout.punches', 'mediaelement', 'datatables-bootstrap'], function (ko, css, dataTablesBootstrapCss,templateMarkup) {
 
     function MimVideoPlaylist(params) {
         var self = this;
         self.list = [
-    { "video": 'videos/sampleVideo.mp4', "poster": "videos/sampleVideo.jpg", title: 'video 1' },
-    { "video": 'videos/sampleVideo.mp4', "poster": "videos/sampleVideo.jpg", title: 'video 1' },
-    { "video": 'videos/sampleVideo.mp4', "poster": "videos/sampleVideo.jpg", title: 'video 1' },
-    { "video": 'videos/sampleVideo.mp4', "poster": "videos/sampleVideo.jpg", title: 'video 1' }
+    { "video": 'video/Video1.mp4',"poster": "video/Video1.jpg", title: 'video 1 ' },
+    { "video": 'video/Video2.mp4', "poster": "video/Video1.jpg", title: 'video 2' }
         ];
         self.fileName = ko.observable(self.list[0].video);
+        self.posterFileName = ko.observable(self.list[0].poster);
         self.isVideoVisible = ko.observable(false);
-        self.posterClick = function () {
+        self.mustPlay = ko.observable(false);
+        self.playOnRender = ko.observable(false);
+
+        self.playerAssign = function () {
+            delete self.player;
+            self.player =
+            $('#videoContent').mediaelementplayer({
+                alwaysShowControls: false,
+                features: ['playpause', 'volume'],
+                success: function (mediaElement, domObject) {
+                    if (self.mustPlay()) mediaElement.play();
+                },
+                error: function (data) {
+                    alert('data')
+                }
+            });
+        };
+
+        self.playlistClick = function (data) {
+            self.isVideoVisible(false);
+            self.fileName(data.video);
+            self.posterFileName(data.poster);
+            self.mustPlay(true);
             self.isVideoVisible(true);
-            document.getElementById('video-content').Play();
-            return false;
+            return true;
         }
-        self.videoUrlBase = 'videos'
+
+        self.videoUrlBase = 'videos';
+        self.player = null;
 
         self.initView = function () {
-            $('#idLpVote').DataTable(
+            $('#mim-playlist-innner').DataTable(
                 {
                     responsive: true,
                     "deferRender": true,
@@ -30,18 +52,15 @@ define(['knockout', 'text!./mim-video-playlist.html', 'datatables'], function (k
                     searching: false,
                     ordering: false,
                     paging: false,
-                    "info": false,
-                    "columns": [
-                        { "orderable": false, "width": "20px" },
-                        { "orderable": false },
-                    ]
+                    "info": false
                 });
+            $('#mim-playlist-innner').removeClass('display').addClass('table table-striped table-bordered');
         };
-                $('#idLpVote').removeClass('display').addClass('table table-striped table-bordered');
+        ko.punches.enableAll();
+        self.initView();
+        self.isVideoVisible(true);
   }
 
-  // This runs when the component is torn down. Put here any logic necessary to clean up,
-  // for example cancelling setTimeouts or disposing Knockout subscriptions/computeds.
   MimVideoPlaylist.prototype.dispose = function() { };
   
   return { viewModel: MimVideoPlaylist, template: templateMarkup };
