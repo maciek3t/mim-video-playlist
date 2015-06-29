@@ -1,52 +1,56 @@
-
     <div class="row">
-            <table class="mim-playlist-outer" id="mim-playlist-container">
-                <thead style="visibility:hidden">
-                    <tr>
-                        <th>video</th>
-                        <th>s</th>
-                        <th>list</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <!-- ko if : isVideoVisible() -->
-                            <div class="embed-responsive embed-responsive-16by9">
-                                <video data-bind="attr:{'src': fileName, 'poster': posterFileName, afterRender: playerAssign()}"
-                                       id="videoContent" width="640" height="360"
-                                        type="video/mp4"
-                                       controls="controls" preload="auto">
-                                </video>
-                            </div>
-                            <!-- /ko -->
-                            <!--<img src="videos/Video_Etap_1_1.jpg" alt="Video" class="img-responsive" width="640" height="360" data-bind="visible: !isVideoVisible(), click: posterClick" />-->
-                        </td>
-                        <td style="width: 2px;"></td>
-                        <td>
-                            <table class="mim-playlist-innner" id="mim-playlist-innner">
-                                <thead style="visibility:hidden">
-                                    <tr style="visibility:hidden; display:none">
-                                        <th>title</th>
-                                    </tr>
-                                </thead>
-                                <tbody data-bind="foreach: list">
-                                    <tr data-bind="click: $parent.playlistClick">
-                                        <td>
-                                            <div class="media">
-                                                <div class="media-left">
-                                                    <img class="media-object" data-bind="attr:{src: poster}" width="128" height="72" />
-                                                </div>
-                                                <div class="media-body" style="width: 100%">
-                                                    <span data-bind="text: title"></span>
-                                                </div>
+        <!-- ko if : isVideoDataLoaded() -->
+        <table class="mim-playlist-outer" id="mim-playlist-container">
+            <thead style="visibility:hidden">
+                <tr>
+                    <th>video</th>
+                    <th>s</th>
+                    <th>list</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <!-- ko if : isVideoVisible() -->
+                        <div class="embed-responsive embed-responsive-16by9">
+                            <video data-bind="attr:{'src': fileName, 'poster': posterFileName, afterRender: playerAssign()}"
+                                   id="videoContent" width="640" height="360"
+                                   type="video/mp4"
+                                   controls="controls" preload="auto"></video>
+                        </div>
+                        <!-- /ko -->              
+                    </td>
+                    <td style="width: 2px;"></td>
+                    <td style="vertical-align:top;">
+                        <table class="mim-playlist-innner" id="mim-playlist-innner" style="margin-top: 1px !important; width: 100%">
+                            <thead style="visibility:hidden">
+                                <tr style="visibility:hidden; display:none">
+                                    <th>title of movie</th>
+                                </tr>
+                            </thead>
+                            <tbody data-bind="foreach: list()">
+                                <tr data-bind="click: $parent.playlistClick">
+                                    <td>
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <img class="media-object" data-bind="attr:{src: poster}" width="128" height="72" />
                                             </div>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+                                            <div class="media-body" style="width: 100%">
+                                                <span data-bind="text: title">
+                                                </span>
+                                                <!-- ko if: isPlaying()  -->
+                                                <br>
+                                                <i class="fa fa-video-camera"></i>
+                                                <!-- /ko -->
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- /ko -->
     </div>
